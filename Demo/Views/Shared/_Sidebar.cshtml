@@ -1,0 +1,167 @@
+﻿@model IEnumerable<Demo.Models.SideBarModel>
+
+@{
+    Layout = null;
+}
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="sidebar-search">
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+                <!-- /input-group -->
+            </li>
+            @foreach (var item in Model)
+            {
+                var cnames = item.InnerSideBars;
+                if (cnames.Count == 1)
+                {
+                    <li>
+                        <a href="@Url.Content("~/" + cnames.FirstOrDefault().ControllerName)"><i class="fa fa-cog"></i> @item.TypeName</a>
+                    </li>
+                }
+                else if (cnames.Count >= 1)
+                {
+                    <li>
+                        <a href="#"><i class="fa fa-cog"></i> @item.TypeName<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            @foreach (var controller in cnames.OrderBy(x => x.Priority))
+                            {
+                                <li>
+                                    <a href="@Url.Content("~/" + controller.ControllerName)"><i class="fa fa-cog"></i> @controller.ControllerTitle</a>
+                                </li>
+                            }
+                            
+                        </ul>
+
+                    </li>
+                }
+            }
+            @*<li>
+                <a href="@Url.Content("~/Account")"><i class="fa fa-cog"></i> 會員管理</a>
+            </li>
+            <li>
+                <a href="@Url.Content("~/Admin/CodeVersions")"><i class="fa fa-cog"></i> 程式版本管理</a>
+            </li>
+            <li>
+                <a href="@Url.Content("~/Admin/ContentVersions")"><i class="fa fa-cog"></i> 內容版本管理</a>
+            </li>
+            <li>
+                <a href="@Url.Content("~/Admin/Groups")"><i class="fa fa-cog"></i> 群組</a>
+            </li>
+            <li>
+                <a href="@Url.Content("~/Admin/MainVisual")"><i class="fa fa-cog"></i> 主視覺管理</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-cog"></i> 門市<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="@Url.Content("~/Admin/Shops")"><i class="fa fa-cog"></i> 門市據點</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Admin/Shop_Device")"><i class="fa fa-cog"></i> 門市裝置</a>
+                    </li>
+                </ul>
+            </li>*@
+            @*<li>
+                <a href="@Url.Content("~/Admin/Assurances")"><i class="fa fa-cog fa-fw"></i> 四大保證</a>
+            </li>*@
+            @*<li>
+                <a href="#"><i class="fa fa-dot-circle-o"></i> 衛教<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="@Url.Content("~/Admin/Education_Category")"><i class="fa fa-dot-circle-o"></i> 類別</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Admin/Education_Content")"><i class="fa fa-dot-circle-o"></i> 內容</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-dot-circle-o"></i> 電子價目表<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="@Url.Content("~/Admin/Price_Type")"><i class="fa fa-cog"></i> 價目表分類</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Admin/Price_EyeGlassesType")"><i class="fa fa-dot-circle-o"></i> 鏡架系列</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Admin/Price_Brand")"><i class="fa fa-dot-circle-o"></i> 廠商</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Admin/Price_Brand_Series")"><i class="fa fa-dot-circle-o"></i> 品牌系列</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Admin/Price_Product")"><i class="fa fa-dot-circle-o"></i> 產品</a>
+                    </li>
+                </ul>
+            </li>*@
+
+            @*<li>
+                <a href="#"><i class="fa fa-sitemap fa-fw"></i> 參考範例<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="@Url.Content("~/Example/Departments")"><i class="fa fa-database fa-fw"></i> 部門 CRUD</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Example/Employees")"><i class="fa fa-database fa-fw"></i> 員工 CRUD</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Example/Tables")"><i class="fa fa-table fa-fw"></i> 表格</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Example/Forms")"><i class="fa fa-list-alt fa-fw"></i> 表單</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Example/Images")"><i class="fa fa-file-image-o fa-fw"></i> 上傳圖片</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/fileman/dev.html")"><i class="fa fa-folder-open-o fa-fw"></i> 檔案總管</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="#">Second Level Item</a>
+                    </li>
+                    <li>
+                        <a href="#">Third Level <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level">
+                            <li>
+                                <a href="#">Third Level Item</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="@Url.Content("~/Default/Blank")">Blank Page</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Default/Login")">Login Page</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>*@
+        </ul>
+
+
+
+    </div>
+    <!-- /.sidebar-collapse -->
+</div>

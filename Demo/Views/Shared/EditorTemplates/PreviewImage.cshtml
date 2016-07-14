@@ -1,0 +1,27 @@
+﻿@model string
+
+@{
+    var id = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var value = ViewData.TemplateInfo.FormattedModelValue.ToString();
+    var src = string.IsNullOrEmpty(value) ? "http://placehold.it/300x200?text=IMAGE" : value;
+}
+
+@*<div class="preview-wrap">
+        <i class="fa fa-times fa-lg preview-close"></i>
+        <img id="@(id)_Preview" class="preview-image img-thumbnail" src="@src" data-id="@id" alt="" />
+        <input type="text" id="@id" name="@id" class="form-control hidden" value="@Model" />
+    </div>*@
+
+<div id="box-@(id)" class="box">
+    <div class="box-header">
+        <h3 class="box-title" title="@Model">@Model</h3>
+        <div class="box-tools">
+            <a class="btn btn-box-tool preview-close"><i class="ion-ios-close-empty"></i></a>
+        </div><!-- /.box-tools -->
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        @*<i class="fa fa-times fa-lg preview-close"></i>*@
+        <img id="@(id)_Preview" class="preview-image" src="@src" data-id="@id" alt="" style="width:100%; cursor: pointer;" />
+        <input type="text" id="@id" name="@id" class="form-control hidden" value="@Model" />
+    </div><!-- /.box-body -->
+</div>

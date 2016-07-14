@@ -1,0 +1,305 @@
+﻿body {
+    font-size: 13px;
+}
+
+.btn,
+.form-control {
+    font-size: 13px;
+    border-radius: 0;
+}
+
+.input-group-addon {
+    border-radius: 0;
+}
+.input-group-btn button {
+    font-size: 14px;
+}
+
+.required:before 
+{
+    content: "* ";
+    color: red; 
+}
+
+.colorpicker-2x .colorpicker-saturation {
+    width: 160px;
+    height: 160px;
+}
+    
+.colorpicker-2x .colorpicker-hue,
+.colorpicker-2x .colorpicker-alpha {
+    width: 20px;
+    height: 160px;
+}
+    
+.colorpicker-2x .colorpicker-color,
+.colorpicker-2x .colorpicker-color div {
+    height: 30px;
+}
+.colorpicker-component .input-group-addon {
+    padding: 0 !important;
+}
+.colorpicker-element .input-group-addon i, .colorpicker-element .add-on i {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.box {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    position: relative;
+}
+.box-header {
+    border-bottom: 1px dashed #ccc;
+}
+.box-title {
+    font-size: 13px;
+    margin: 0;
+    height: 36px;
+    line-height: 36px;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 0 36px 0 10px;
+}
+.box-body {
+    padding: 10px;
+}
+
+.preview-close {
+    padding: 0;
+    font-size: 36px;
+    line-height: 1;
+    width: 1em;
+    color: #aaa;
+    border: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    -webkit-transition: all ease-in .2s;
+    -moz-transition: all ease-in .2s;
+    -o-transition: all ease-in .2s;
+    transition: all ease-in .2s;
+}
+.preview-close:hover {
+    color: #fff;
+    background-color: #666;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+.btn-ghost {
+    border-radius: 0;
+    border-color: rgba(255, 255, 255, 0.6);
+}
+.btn-ghost:hover, .btn-ghost:focus, .btn-ghost.focus, .btn-ghost:active, .btn-ghost.active, .open > .dropdown-toggle.btn-ghost {
+    color: #555;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    margin-right: -4px;
+}
+.heading {
+    padding-top: 30px;
+    padding-bottom: 0;
+}
+.heading h2 {
+    margin: 0;
+}
+
+/* Form bordered */
+.form-bordered .form-group {
+    margin: 0;
+    border-bottom: 1px solid #efefef;
+}
+
+    .form-bordered .form-group > div {
+        padding: 15px;
+        border-left: 1px solid #efefef;
+    }
+
+@media (max-width: 991px) {
+    .form-bordered .form-group > div {
+        /* 991px */
+        border-left: 0;
+    }
+}
+
+.form-bordered .form-group.last {
+    border-bottom: 0;
+}
+
+.form-bordered .form-group .control-label {
+    padding-top: 20px;
+}
+
+@media (max-width: 991px) {
+    .form-bordered .form-group .control-label {
+        /* 991px */
+        padding-top: 10px;
+    }
+}
+
+.form-bordered .form-group .help-block {
+    margin-bottom: 0;
+}
+
+.form-bordered .form-group .form-control {
+    margin: 0;
+}
+
+.form-bordered .form-body {
+    margin: 0;
+    padding: 0;
+}
+
+.form-bordered .form-actions {
+    margin-top: 0;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+}
+
+@media (max-width: 991px) {
+    .form-bordered .form-actions {
+        /* 991px */
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+}
+
+/* Horizontal bordered form */
+.form-horizontal.form-bordered.form-row-stripped .form-group:nth-child(even) {
+    background-color: #fcfcfc;
+}
+
+.form-horizontal.form-bordered.form-row-stripped .form-control {
+    background: #fff !important;
+}
+
+/* Rows seperated form layout */
+.form-row-seperated .portlet-body {
+    padding: 0;
+}
+
+.form-row-seperated .form-group {
+    margin: 0;
+    border-bottom: 1px solid #efefef;
+    padding: 15px 0;
+}
+
+    .form-row-seperated .form-group.last {
+        border-bottom: 0;
+        margin-bottom: 0;
+        padding-bottom: 13px;
+    }
+
+    .form-row-seperated .form-group .help-block {
+        margin-bottom: 0;
+    }
+
+.form-row-seperated .form-body {
+    padding: 0;
+}
+
+.form-row-seperated .form-actions {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+
+/*datepicker range*/
+.input-daterange input {
+    border-radius: 0 !important;
+}
+.datepicker table tr td, .datepicker table tr th {
+    width: 40px;
+    height: 32px;
+    border-radius: 0;
+}
+.datepicker table tr td span {
+    border-radius: 0;
+}
+.datepicker-days tbody tr {
+    border-top: 1px dashed #eee;
+}
+
+.clear {
+    clear: both;
+    height: 0;
+}
+
+@media (min-width: 991px) {
+    /* 991px */
+    #filter-block .form-group {
+        margin-bottom:4px;
+    }
+}
+
+.help-block {
+    color: #acacac;
+}
+
+/*datatalbes fixed*/
+.dataTables_length {
+    float: left;
+}
+.dataTables_length .bootstrap-select {
+    width: 80px !important;
+}
+    .dataTables_length .bootstrap-select .btn {
+        font-size: 13px;
+    }
+button.ColVis_Button {
+    height: auto; 
+    padding: 5px 8px;
+}
+div.DTTT_container {
+    margin-left: 4px;
+    display: none;
+}
+#filterModal {
+    padding: 15px;
+}
+    #filterModal label {
+        padding-right: 0;
+    }
+
+.modal-content{
+    border-radius: 0;
+}
+@media (min-width: 1200px) {
+    .modal-lg {
+        width: 1140px;
+    }
+}
+
+/*https://www.geekgoddess.com/how-to-resize-the-google-nocaptcha-recaptcha/*/
+@media screen and (max-height: 575px){
+    #rc-imageselect,
+    .g-recaptcha {
+        -webkit-transform: scale(0.77);
+        -moz-transform: scale(0.77);
+        -ms-transform: scale(0.77);
+        -o-transform: scale(0.77);
+        transform: scale(0.77);
+        -webkit-transform-origin: 0 0;
+        -moz-transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+        -o-transform-origin: 0 0;
+        transform-origin: 0 0;
+    }
+}

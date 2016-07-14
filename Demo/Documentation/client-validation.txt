@@ -1,0 +1,14 @@
+﻿MVC的預設驗證有Client、Server兩種
+但Client驗證沒有完全支援(CheckBoxFor, DropDownListFor)
+http://www.dotnet-tricks.com/Tutorial/mvc/H1VF301212-MVC4-Registration-form-with-Client-and-Server-Side-Validation.html
+
+僅需做下列調整
+==================================================================
+@Html.CheckBoxFor()時
+==================================================================
+[Required] 改用 [MustBeTrue]
+
+==================================================================
+@Html.DropDownListFor()
+==================================================================
+[Required] 改用 [MustBeSelected]

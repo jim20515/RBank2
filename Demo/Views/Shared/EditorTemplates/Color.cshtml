@@ -1,0 +1,29 @@
+﻿@{
+    var id = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var value = ViewData.TemplateInfo.FormattedModelValue.ToString();
+}
+
+<div class="input-group colorpicker-component">
+    <span class="input-group-addon"><i></i></span>
+    <input type="text" id="@id" name="@id" value="@value" class="form-control" />
+</div>
+<script>
+    $(function() {
+        $('.colorpicker-component').colorpicker({
+            customClass: 'colorpicker-2x',
+            align: 'left',
+            sliders: {
+                saturation: {
+                    maxLeft: 160,
+                    maxTop: 160
+                },
+                hue: {
+                    maxTop: 160
+                },
+                alpha: {
+                    maxTop: 160
+                }
+            }
+        });
+    });
+</script>

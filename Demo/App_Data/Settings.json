@@ -1,0 +1,42 @@
+[
+  {
+    "Name": "Website.Title",
+    "Value": "Demo 專案~"
+  },
+  {
+    "Name": "Website.Desction",
+    "Value": "CHAMPTRON 豐禾成立12年，公司今年將廣告部門獨立成為新的廣告公司．並規劃2016年上市櫃為主要目標．在業界我們有很強的競爭優勢，在這裏你會有一群專業的夥伴，“依賴夥伴們”是我們公司與一般廣告公司最大的不同創意，是我們快樂的泉源．天天公司都在成長，如果你期待有伯樂，有千里馬，這裡有成群的伯樂與結隊的千里馬．瑄品 Whats Media/ 蝦米創意媒體 是一個國際新媒體廣告營運團隊。我們是專業的全方位廣告公司，專業使我們跟客戶更緊密，滿足客戶所有品牌行銷需求。"
+  },
+  {
+    "Name": "Website.Company",
+    "Value": "蝦米創意媒體 | Whats Media Inc."
+  },
+  {
+    "Name": "Website.Tel",
+    "Value": "02-0000-0000\n"
+  },
+  {
+    "Name": "Website.Email",
+    "Value": "Admin@champtron.com"
+  },
+  {
+    "Name": "Website.Keysords",
+    "Value": "CHAMPTRON 瑄品, 蝦米, Whatsmedia, 虾米"
+  },
+  {
+    "Name": "MediaSetting.ThumbSize",
+    "Value": "?w=100&h=100&format=jpg&mode=max"
+  },
+  {
+    "Name": "MediaSetting.DefaultSize",
+    "Value": "?w=1000&h=1000&format=jpg&mode=max"
+  },
+  {
+    "Name": "MediaSetting.LargeSize",
+    "Value": "?w=2000&h=2000&format=jpg&mode=max"
+  },
+  {
+    "Name": "MediaSetting.SmallSize",
+    "Value": "?w=60&h=60&format=jpg&mode=max"
+  }
+]

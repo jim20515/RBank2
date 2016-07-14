@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Demo.Models.AspNetUsers>
+
+@{
+    ViewBag.Title = "AspNetUsers";
+}
+
+<h2>帳號管理列表</h2>
+
+<hr />
+
+@section scripts {
+    <script src="@Url.Content("~/js/table-admin.js")"></script>
+    <script>
+        table.columnFilter({
+            sPlaceHolder: "thead:after",
+            aoColumns: [
+				{ sSelector: "#col-1" }, // 一般文字
+				{ sSelector: "#col-2", type: "select", search: true }, // 下拉選單, 多選, 可搜尋
+				{ sSelector: "#col-3", type: "select", search: true }, // 下拉選單
+				{ sSelector: "#col-4", type: "date-range" }, // 數字範圍
+				{ sSelector: "#col-5", type: "select" },
+            ]
+        });
+    </script>
+}
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading clearfix">
+        <h3 class="panel-title"></h3>
+        <div class="pull-left">
+            <a href="@Url.Action("Register")" id="newData" class="btn btn-sm btn-ghost btn-outline"><i class="fa fa-plus"></i> 註冊</a>
+            <a href="@Url.Action("Details")" id="detailData" class="btn btn-sm btn-ghost btn-outline hidden"><i class="fa fa-file-text-o"></i> 詳細</a>
+            <a href="@Url.Action("Edit")" id="editData" class="btn btn-sm btn-ghost btn-outline hidden"><i class="fa fa-pencil"></i> 修改</a>
+            <a href="@Url.Action("Delete")" id="deleteData" class="btn btn-sm btn-ghost btn-outline hidden"><i class="fa fa-trash"></i> 刪除</a>
+        </div>
+        <div class="pull-right">
+            <a href="#" id="filter-toggle" class="btn btn-sm btn-ghost btn-outline" data-toggle="modal" data-target="#filterModal"><i class="fa fa-filter"></i> 進階搜尋</a>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="filterModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">進階搜尋</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal form-row-stripped">
+                        <fieldset>
+		                    <div class="form-group" hidden>
+                                <label class="col-md-3 control-label">@Html.DisplayNameFor(model => model.Id)</label>
+                                <div class="col-md-8"><div id="col-1"></div></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">@Html.DisplayNameFor(model => model.UserName)</label>
+                                <div class="col-md-8"><div id="col-2"></div></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">@Html.DisplayNameFor(model => model.Email)</label>
+                                <div class="col-md-8"><div id="col-3"></div></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">@Html.DisplayNameFor(model => model.AspNetRoles)</label>
+                                <div class="col-md-8"><div id="col-4"></div></div>
+                            </div>
+		                    <div class="form-group">
+                                <label class="col-md-3 control-label">@Html.DisplayNameFor(model => model.CreateDate)</label>
+                                <div class="col-md-8"><div id="col-5"></div></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">@Html.DisplayNameFor(model => model.Status)</label>
+                                <div class="col-md-8"><div id="col-6"></div></div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+<div class="panel-body">
+<table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+	<thead>
+    <tr>
+        <th hidden>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetRoles)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+    </tr>
+	</thead>
+	<tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td hidden>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetRoles.FirstOrDefault().Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+    </tr>
+}
+	</tbody>
+
+</table>
+</div>
+</div>

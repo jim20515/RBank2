@@ -1,0 +1,59 @@
+﻿@model Demo.Areas.Admin.Models.AspNetUsers
+
+@{
+    ViewBag.Title = "AspNetUsers Details";
+}
+
+
+<style>
+th {
+    text-align: right;
+	width: 20%;
+}
+th, td {
+    padding: 10px 15px !important;
+}
+</style>
+
+<div>
+
+	<div class="row heading">
+
+        <div class="col-md-6 vcenter">
+            <h2>會員細節</h2>
+        </div>
+
+        <div class="col-md-6 vcenter text-right">
+							@Html.ActionLink("前往修改頁面", "Edit", new { id = Model.Id }, new { @class="btn btn-success" })
+				@Html.ActionLink("返回列表", "Index", null, new { @class = "btn btn-default" })
+
+			        </div>
+
+    </div>
+
+    <hr />
+
+    <table class="table table-striped">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.UserName)</th>
+            <td>@Html.DisplayFor(model => model.UserName)</td>
+        </tr>
+		<tr>
+			<th>@Html.DisplayNameFor(model => model.Email)</th>
+			<td>@Html.DisplayFor(model => model.Email)</td>
+		</tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.AspNetRoles)</th>
+            <td>@Html.DisplayFor(model => model.AspNetRoles.FirstOrDefault().Name)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CreateDate)</th>
+            <td>@Html.DisplayFor(model => model.CreateDate)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Status)</th>
+            <td>@Html.DisplayFor(model => model.Status)</td>
+        </tr>
+    </table>
+</div>
+

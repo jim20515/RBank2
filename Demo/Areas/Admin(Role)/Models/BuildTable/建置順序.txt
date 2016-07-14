@@ -1,0 +1,11 @@
+1.  AspNetRoles.sql
+2.  AspNetUsers.sql
+3.  AspNetUserClaims.sql
+4.  AspNetUserLogins.sql
+5.  AspNetUserRoles.sql
+6.  Account.SideBarType.sql
+7.  Account.ControllerName.sql
+8.  Account.AuthorizeRoles.sql
+9.  寫入角色權限初始值.sql
+10. SexButtonLabelValue.sql
+11. BooleanButtonLabelValue.sql

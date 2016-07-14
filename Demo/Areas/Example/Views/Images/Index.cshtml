@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>單一</h2>
+
+@using (Html.BeginForm("Upload", "Images", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <input type="file" name="file" id="file" class="file" data-show-caption="false" />
+
+}
+
+<hr />
+
+<h2>多檔</h2>
+@using (Html.BeginForm("Uploads", "Images", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <input type="file" name="files" id="files" class="file" multiple data-show-caption="false" />
+
+}

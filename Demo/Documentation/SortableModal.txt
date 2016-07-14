@@ -1,0 +1,194 @@
+﻿SortableModal
+一對多的關聯表格中「子表格」的CRUD處理，主要功能: 
+1. 拖拉排序
+2. 修改子表格所有欄位
+3. 多種內建UI(編輯器、單選、顏色選擇、日期選擇...)
+
+
+==================================================================
+【前置動作】
+==================================================================
+-- 更新 DB, edmx
+-- 父表格 Partial class 加入 public string SM_JSON { get; set; }
+
+
+==================================================================
+【預設用法】只有圖片(BaseImagePath)和說明文字(Title)兩個欄位
+==================================================================
+------------------------------------------------------------------
+1.  View部分 
+	data是預設值
+------------------------------------------------------------------
+	@Html.Partial("_SortableModal")
+	@section scripts {
+		@Scripts.Render("~/bundles/jqueryval")
+		<script>
+			$('#itemModalForm').SortableModal({
+				data: $.parseJSON($('#SM_JSON').val() || '[]')
+			});
+			var SortableModal_API = $('#itemModalForm').data('plugin_SortableModal');
+		</script>
+	}
+------------------------------------------------------------------
+2. 顯示UI的位置
+------------------------------------------------------------------
+	<div class="form-group">
+		@Html.LabelFor(model => model.SM_JSON, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.HiddenFor(model => model.SM_JSON)
+			<div id="filter">
+				<div class="block__list block__list_words">
+					<ol id="editable"></ol>
+				</div>
+				<a id="addUser" class="btn btn-default" data-toggle="modal" data-target="#itemModal"><i class="ion-plus"></i> Add</a>
+			</div>
+		</div>
+	</div>
+
+
+------------------------------------------------------------------
+3.  Controller 加入SortableModal CRUD (此處僅供參考，可依需求自行撰寫)
+------------------------------------------------------------------
+	#region SortableModal CRUD
+
+	/// <summary>
+	/// return json format
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	private string GetSortableModal(int? id)
+	{
+		var sm = from p in db.Employee_Photos
+					where p.EmployeeId == id
+					orderby p.Priority
+					select new BaseSortableModal()
+					{
+						BaseImagePath = p.FilePath,
+						Title = p.Title
+					};
+		return JsonConvert.SerializeObject(sm, new IsoDateTimeConverter { DateTimeFormat = "yyyy/MM/dd" });
+	}
+
+	private void CreateSortableModal(int id, string SM_JSON)
+	{
+		if (SM_JSON != null)
+		{
+			//turn json string to List<T>
+			var SM_List = JsonConvert.DeserializeObject<List<BaseSortableModal>>(SM_JSON);
+
+			//make model for write database
+			for (int i = 0; i < SM_List.Count; i++)
+			{
+				var model = new Employee_Photos()
+				{
+					BaseImagePath = SM_List[i].FilePath,
+					Title = SM_List[i].Title,
+					Priority = i,
+					EmployeeId = id, // FK
+				};
+				db.Employee_Photos.Add(model);
+			}
+		}
+	}
+
+	private void DeleteSortableModal(int id)
+	{
+		var employees_photos = db.Employee_Photos.Where(x => x.EmployeeId == id);
+		foreach (var item in employees_photos)
+		{
+			db.Employee_Photos.Remove(item);
+		}
+	}
+
+	#endregion
+
+
+------------------------------------------------------------------
+4.  Controller 加入 SortableModal CRUD
+	--  注意Bind必須包含SM_JSON
+		[Bind(Include = "...,SM_JSON")]
+------------------------------------------------------------------
+	4.1 Create [post]
+		CreateSortableModal(id, json);
+
+	4.2 Edit [get]
+		model.SM_JSON = GetSortableModal(id);
+
+	4.3 Edit [post]
+		DeleteSortableModal(id);
+		CreateSortableModal(id, json);
+
+	4.4 Delete [post]
+		DeleteSortableModal(id);
+
+
+==================================================================
+【自訂用法】需要自訂欄位和UI
+==================================================================
+------------------------------------------------------------------
+1.  建立自訂 Model 繼承自 BaseSortableModal
+	-- Areas/Models/SortableModal/XXXXXX_SM.cs
+------------------------------------------------------------------
+	namespace Demo.Areas.Admin.Models.SortableModal
+	{
+		public class XXXXXX_SM : BaseSortableModal
+		{
+			public DateTime StartDate { get; set; }
+			public bool Status { get; set; }
+			public string Content { get; set; }
+		}
+	}
+
+
+------------------------------------------------------------------
+2.  調整 Controller 的 SortableModal CRUD
+	-- BaseSortableModal 改用自訂的 XXXXXX_SM
+	-- Assign自訂的新屬性
+------------------------------------------------------------------
+	CreateSortableModal()
+	GetSortableModal()
+
+
+------------------------------------------------------------------
+3.  View 部分 傳入 model object
+	-- key 宣告欄位名稱，這裡的key必須在Model有對應的屬性名稱 (BaseImagePath,Title的key為繼承設定，請勿修改)
+	-- value 宣告UI類型，目前提供:
+	   -- Text: 一般文字(預設值)
+	   -- Date: 日期選擇
+	   -- Checkbox: 單選checkbox
+	   -- Editor: 文字編輯器( SM_JSON 設定 [AllowHtml] )
+	   -- Color: 顏色選取
+	-- displayName(option) 顯示名稱，預設是key值
+	-- required(option) 是否必塡
+------------------------------------------------------------------
+	$('#itemModalForm').SortableModal({
+		data: $.parseJSON($('#SM_JSON').val() || '[]'),
+		model: [
+            {
+                key: 'BaseImagePath',
+                type: 'Image'
+            },
+            {
+                key: 'Title',
+                type: 'Text'
+            },
+			{
+                key: 'StartDate',
+                type: 'Date',
+                displayName: '開始時間'
+            },
+			{
+                key: 'Content',
+                type: 'Editor',
+                required: true
+            },
+			{
+                key: 'BgColor',
+                type: 'Color'
+            },
+			{
+                key: 'Status',
+                type: 'Checkbox'
+            }
+        ]
+	});

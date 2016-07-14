@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Demo.Areas.Admin.Models.AspNetRoles>
+@using Demo.Areas.Admin.Controllers
+@using Mvc.JQuery.DataTables
+@using Mvc.JQuery.DataTables.Models
+@using Mvc.JQuery.DataTables.Serialization
+
+@{
+    ViewBag.Title = "AspNetRoles";
+}
+
+<h2>角色管理</h2>
+
+<hr />
+
+
+@{
+    var vm = Html.DataTableVm("table-id", (RolesController h) => h.GetServerData(null));
+    //vm.JsOptions.Add("iDisplayLength", 25);
+    //vm.JsOptions.Add("aLengthMenu", new object[] { new[] {5, 10, 25, 250, -1} , new object[] { 5, 10, 25, 250, "All"} });
+
+    vm.JsOptions.Add("fnCreatedRow", new Raw(@"function( nRow, aData, iDataIndex ) {
+        $(nRow).attr('data-id', aData[0]);
+    }"));
+
+    vm.FilterOn("Id", new { sSelector = "#custom-filter-placeholder-Id" }).Text();
+    vm.FilterOn("Name", new { sSelector = "#custom-filter-placeholder-Name" }).Text();
+    vm.FilterOn("Account_ControllerName", new { sSelector = "#custom-filter-placeholder-Account_ControllerName" }).Text();
+
+
+    //vm.FilterOn("Position", new { sSelector = "#custom-filter-placeholder-position" }).Select("true", "false", ...);
+    //vm.FilterOn("Number").CheckBoxes(Enum.GetNames(typeof(Numbers)));
+    //vm.FilterOn("Id").NumberRange()
+    //vm.FilterOn("Data").DateRange();
+    //vm.FilterOn("Gender", new { sSelector = "#custom-filter-placeholder-Gender" }).CheckBoxes("choiceA", "choiceB", ...);
+    //vm.FilterOn("Priority", new { sSelector = "#custom-filter-placeholder-Priority" }).Select(Demo.Utils.GlobalValues.MonthList); 月份選單
+
+    //vm.DrawCallback = "drawCallback";
+
+    //you can change the page length options...
+    vm.LengthMenu = LengthMenuVm.Default();
+    vm.LengthMenu.RemoveAll(t => t.Item2 == 5);
+    //vm.PageLength = 25; //... and set a default
+    vm.ColumnFilter = true;
+    vm.HideHeaders = true;
+    vm.StateSave = true;
+    vm.ColVis = true;
+    //vm.Dom = "CTlfrtip";
+    vm.TableClass = "table table-striped table-bordered table-hover";
+    vm.Language = "{ 'sUrl': '" + Url.Content("~/Scripts/DataTables/Chinese-traditional.json") + "' }";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading clearfix">
+        <h3 class="panel-title"></h3>
+        <div class="pull-left">
+            <a href="@Url.Action("Create")" id="newData" class="btn btn-sm btn-ghost btn-outline"><i class="fa fa-plus"></i> 新增</a>
+            <a href="@Url.Action("Details")" id="detailData" class="btn btn-sm btn-ghost btn-outline hidden"><i class="fa fa-file-text-o"></i> 詳細</a>
+            <a href="@Url.Action("Edit")" id="editData" class="btn btn-sm btn-ghost btn-outline hidden"><i class="fa fa-pencil"></i> 修改</a>
+            <a href="@Url.Action("Delete")" id="deleteData" class="btn btn-sm btn-ghost btn-outline hidden"><i class="fa fa-trash"></i> 刪除</a>
+        </div>
+        <div class="pull-right">
+            <a href="#" id="filter-toggle" class="btn btn-sm btn-ghost btn-outline" data-toggle="modal" data-target="#filterModal"><i class="fa fa-filter"></i> 進階搜尋</a>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="filterModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">進階搜尋</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal form-row-stripped">
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">@Html.DisplayNameFor(model => model.Id)</label>
+                                <div class="col-md-8"><div id="custom-filter-placeholder-Id"></div></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">@Html.DisplayNameFor(model => model.Name)</label>
+                                <div class="col-md-8"><div id="custom-filter-placeholder-Name"></div></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">@Html.DisplayNameFor(model => model.Account_ControllerName)</label>
+                                <div class="col-md-8"><div id="custom-filter-placeholder-Account_ControllerName"></div></div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="panel-body">
+        @Html.Partial("_DataTable", vm)
+    </div>
+</div>

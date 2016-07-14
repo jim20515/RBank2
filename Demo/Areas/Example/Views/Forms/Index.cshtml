@@ -1,0 +1,258 @@
+﻿@{
+    ViewBag.Title = "Form";
+}
+
+<script src="@Url.Content("~/Scripts/tinymce/tinymce.js")"></script>
+
+@section scripts {
+    <script>
+        tinyMCE.init({
+            selector: '#tinymce',
+            language: 'zh_TW',
+            relative_urls: false,
+            theme: "modern",
+            skin: 'custom',
+            plugins: [
+                    "advlist autoresize autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "colorpicker textcolor insertdatetime media table contextmenu paste"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+            file_browser_callback: RoxyFileBrowser
+        });
+
+        function RoxyFileBrowser(field_name, url, type, win) {
+            var roxyFileman = '/fileman/dev.html';
+            if (roxyFileman.indexOf("?") < 0) {
+                roxyFileman += "?type=" + type;
+            }
+            else {
+                roxyFileman += "&type=" + type;
+            }
+            roxyFileman += '&input=' + field_name + '&value=' + win.document.getElementById(field_name).value;
+            if (tinyMCE.activeEditor.settings.language) {
+                roxyFileman += '&langCode=' + tinyMCE.activeEditor.settings.language;
+            }
+            tinyMCE.activeEditor.windowManager.open({
+                file: roxyFileman,
+                title: '檔案總管',
+                width: 960,
+                height: 650,
+                resizable: "yes",
+                plugins: "media",
+                inline: "yes",
+                close_previous: "no"
+            }, { window: win, input: field_name });
+            return false;
+        }
+
+        $(document).ready(function () {
+
+            $('select').selectpicker();
+
+            $('.date').datepicker({
+                //language: "zh-TW",
+                autoclose: true,
+                clearBtn: true,
+                todayHighlight: true
+            });
+
+            $("#file").fileinput({
+                maxFileSize: 100,
+                allowedFileExtensions: ["jpg"]
+            });
+
+        });
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">Forms</h1>
+    </div>
+    <!-- /.col-md-12 -->
+</div>
+<!-- /.row -->
+
+<p>在form增加class</p>
+有邊框<code>.form-bordered</code><br />
+雙色列<code>.form-row-stripped</code><br />
+無中線<code>.form-row-seperated</code><br />
+
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form class="form-horizontal form-bordered form-row-stripped">
+                <fieldset>
+                    <legend>Legend</legend>
+                    <div class="form-group">
+                        <label for="inputEmail" class="col-md-2 control-label">Email</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                            <span class="help-block">( ex: demo@example.com )</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-md-2 control-label">Password</label>
+                        <div class="col-md-4">
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> 記住密碼
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Datepicker</label>
+                        <div class="col-md-4">
+                            <div class="input-group date">
+                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Datepicker range</label>
+                        <div class="col-md-4">
+                            <div class="input-daterange input-group">
+                                <input type="text" class="form-control date" name="start" />
+                                <span class="input-group-addon">to</span>
+                                <input type="text" class="form-control date" name="end" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tinymce" class="col-md-2 control-label">Editor</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control" rows="3" id="tinymce"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textArea" class="col-md-2 control-label">Textarea</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control" rows="3" id="textArea"></textarea>
+                            <span class="help-block">( A longer block of help text that breaks onto a new line and may extend beyond one line. )</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Radio</label>
+                        <div class="col-md-10">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> 男性
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> 女性
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Radio-inline</label>
+                        <div class="col-md-10">
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" name="radio-inline" value="" checked /> radio 1
+                                </label>
+                                <label>
+                                    <input type="radio" name="radio-inline" value="" /> radio 2
+                                </label>
+                                <label>
+                                    <input type="radio" name="radio-inline" value="" /> radio 3
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Checkbox</label>
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="checkbox" id="checkbox" value="checkbox" checked> checkbox
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Checkbox-inline</label>
+                        <div class="col-md-10">
+                            <div class="checkbox-inline">
+                                <label>
+                                    <input type="checkbox" name="checkbox-inline" value="" checked /> checkbox 1
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="checkbox-inline" value="" checked /> checkbox 2
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="checkbox-inline" value="" /> checkbox 3
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="select" class="col-md-2 control-label">Selects</label>
+                        <div class="col-md-4">
+                            <select class="form-control show-tick show-menu-arrow" id="select">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="select-1" class="col-md-2 control-label">Multiple Selects</label>
+                        <div class="col-md-4">
+                            <select multiple="" class="form-control show-tick show-menu-arrow" data-live-search="true">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="select-1" class="col-md-2 control-label">Year / Month</label>
+                        <div class="col-md-10">
+                            Year @Html.DropDownList("Year", new SelectList(Enumerable.Range(DateTime.Now.Year, 10)), new { @data_width = "auto" })
+                            Month @Html.DropDownList("Month", new SelectList(Enumerable.Range(1, 10)), new { @data_width = "auto" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="file" class="col-md-2 control-label">File</label>
+                        <div class="col-md-10">
+                            <input type="file" id="file" class="form-control" data-show-caption="false" data-show-upload="false" />
+                            <span class="help-block">( 限制JPG, 100KB )</span>
+                        </div>
+                    </div>
+                    <div class="form-group last">
+                        <div class="col-md-10 col-md-offset-2">
+                            <button type="reset" class="btn btn-default">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <!-- END FORM-->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-md-12 -->
+</div>
+<!-- /.row -->

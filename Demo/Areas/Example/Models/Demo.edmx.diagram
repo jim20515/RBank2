@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7cf3f7e264e247b6adb3ad71a66b9263" Name="Diagram1">
+        <EntityTypeShape EntityType="DemoModel.Employee" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DemoModel.Department" Width="1.5" PointX="0.75" PointY="5.375" />
+        <AssociationConnector Association="DemoModel.FK_Employees_Departments" />
+        <EntityTypeShape EntityType="DemoModel.Employee_Photos" Width="1.5" PointX="3" PointY="1.375" />
+        <AssociationConnector Association="DemoModel.FK_Employee_Photos_To_Employees" />
+        <EntityTypeShape EntityType="DemoModel.Sample" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DemoModel.Sample_Photos" Width="1.5" PointX="7.625" PointY="6.25" />
+        <EntityTypeShape EntityType="DemoModel.Test" Width="1.5" PointX="3.375" PointY="5.75" />
+        <AssociationConnector Association="DemoModel.FK_Sample_Photos_To_Sample" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

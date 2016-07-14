@@ -1,0 +1,10 @@
+﻿@model string
+
+@{
+    var id = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var value = ViewData.TemplateInfo.FormattedModelValue.ToString();
+    var src = string.IsNullOrEmpty(value) ? "http://placehold.it/300x200?text=IMAGE" : value;
+}
+
+<img id="@(id)_Preview" class="preview-image" src="@src" data-id="@id" alt="" style="height:60px;" />
+

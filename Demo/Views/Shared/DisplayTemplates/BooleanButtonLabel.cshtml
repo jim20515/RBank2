@@ -1,0 +1,17 @@
+﻿@model bool?
+
+@if (Model.HasValue)
+{
+    if (Model.Value)
+    {
+        <span class="label label-success">啟用中</span>
+    }
+    else
+    {
+        <span class="label label-warning">停用中</span>
+    }
+}
+else
+{
+    <span class="label label-info">Not Set</span>
+}

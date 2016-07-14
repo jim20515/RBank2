@@ -1,0 +1,119 @@
+﻿內建的CheckBox要使用在'複選'，還蠻複雜的
+所以新增了一組HTML Helpers，簡化View的UI處理
+
+Demo專案已定義了CheckBoxList所需的CheckBoxModel
+
+namespace Demo.Models
+{
+    public class CheckBoxModel
+    {
+		// PK
+        public int Id { get; set; }      
+        
+		// 顯示名稱
+		public string Name { get; set; }  
+		
+		// 是否選擇(初始預設值)
+        public bool IsSelected { get; set; }
+    }
+}
+
+==================================================================
+Model部分
+Partial Class 擴充一個屬性，
+在POST時，用來接收使用者checked的結果
+==================================================================
+    [MetadataType(typeof(xxxxxxxxxxMetaData))]
+    public partial class xxxxxxxxxx
+    {
+		// 型別自行定義 string[], Guid[], int[] ...
+        public string[] SelectedItems { get; set; }
+    }
+
+    public class xxxxxxxxxxMetaData
+    {
+    }
+
+==================================================================
+Controller部分 (此處僅供參考，請依需求自行撰寫)
+==================================================================
+	[HttpGet]
+	public ActionResult Create()
+    {
+        // 準備好List<CheckBoxModel>，透用ViewBag傳給View使用
+		ViewBag.AvailableItems = db.Departments
+								   .Select(x => new CheckBoxModel
+								   {
+								       Id = x.Id,
+								       Name = x.Title,
+								       IsSelected = false // Edit時需要判斷
+								   }).ToList();
+        return View();
+    }
+
+	[HttpPost]
+	// 記得Bind(...,SelectedItems)
+    public ActionResult Create([Bind(Include = "Id,Name,CreateDate,CreateUser,ModifyDate,ModifyUser,Priority,SelectedItems")] Test test)
+    {
+        if (ModelState.IsValid)
+        {
+			// 處理SelectedItems的值、寫DB
+            test.SelectedDepts = String.Join(",", test.SelectedItems.ToArray());
+
+            db.Tests.Add(test);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        return View(test);
+    }
+
+	[HttpGet]
+	public ActionResult Edit() {
+        ...
+        var selected = test.SelectedDepts.Split(',').ToList();
+        ViewBag.AvailableItems = db.Departments
+                                   .Select(x => new CheckBoxModel
+                                   {
+                                       Id = x.Id,
+                                       Name = x.Title,
+                                       IsSelected = selected.Contains(x.Id.ToString()) // Edit時需要判斷
+                                   }).ToList();
+        ...
+    }
+
+	[HttpPost]
+	public ActionResult Edit() {
+        ...
+        if (test.SelectedItems == null)
+        {
+            test.SelectedDepts = "";
+        }
+        else
+        {
+            test.SelectedDepts = String.Join(",", test.SelectedItems.ToArray());
+        }
+        ...
+
+            // SaveAndEdit
+            ViewBag.AvailableItems = db.Departments
+                                       .Select(x => new CheckBoxModel
+                                       {
+                                           Id = x.Id,
+                                           Name = x.Title,
+                                           IsSelected = test.SelectedItems.Contains(x.Id.ToString()) // Edit時需要判斷
+                                       }).ToList();
+    }
+
+==================================================================
+View部分
+==================================================================
+@using Demo.Helpers
+
+// 此範例為ViewBag傳遞，故需要轉型
+<div class="form-group">
+    @Html.LabelFor(model => model.SelectedDepts, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.CheckBoxList("SelectedItems", (List<Demo.Models.CheckBoxModel>)ViewBag.AvailableItems)
+    </div>
+</div>

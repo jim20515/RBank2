@@ -1,0 +1,57 @@
+﻿本文件將說明在專案中如何建立排程工作
+
+如果想要在專案中建立排程工作(如定時寄信)
+可以在專案中安裝Quartz.NET套件
+
+Quartz.NET
+專案網站: http://www.quartz-scheduler.net/
+Nuget: https://www.nuget.org/packages/Quartz/
+
+安裝與使用:
+	1.請使用Nuget安裝Quartz.NET
+	2.新增ScheduledTasks.cs檔，內容包含：
+		 
+		 public class YourJob : IJob
+		 {
+			public void Execute(IJobExecutionContext context)
+			{
+			//排程工作內內容
+			}
+		 }
+		 
+		 public class JobScheduler
+		 {
+			public static void Start()
+			{
+				//建立排程器
+				IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
+				scheduler.Start();
+
+				//建立排程工作
+				IJobDetail YourJob = JobBuilder.Create<YourJob>().Build();
+
+				//"Seconds Minutes Hours Day-of-Month Month Day-of-Week Year (optional field)"
+				//http://quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-06
+
+				//設定排程執行時間
+				//詳細設定參考上方連結
+				//這邊這設定是每3600秒執行一次工作
+				ITrigger YourTrigger = TriggerBuilder.Create()
+                .StartNow()
+                .WithSimpleSchedule(x => x
+                    .WithIntervalInSeconds(3600)
+                    .RepeatForever())
+                .Build();
+
+				//註冊排程
+				scheduler.ScheduleJob(YourJob, YourTrigger);
+			}
+		 }
+
+	3.打開Global.asax加入
+		JobScheduler.Start();
+	  啟動排程器
+
+詳細的解說可以參考專案網站或是DreamMall_Backend專案
+		
+		

@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Demo.Areas.Example.Models.ExcelData>
+
+@*@{
+        ViewBag.Title = "UpdateShop";
+    }*@
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header">Excel 轉資料</h2>
+    </div>
+    <!-- /.col-md-12 -->
+</div>
+<!-- /.row -->
+
+@using (Html.BeginForm("UploadData", "ExcelUploadToData", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-4">
+            <label class="control-label col-md-2" for="UploadedFile"></label>
+            <input type="file" name="UploadedFile" />
+        </div>
+
+        <div class="col-md-4">
+            <input type="submit" name="Submit" value="開始更新" />
+        </div>
+    </div>
+}
+
+
+<div class="panel-body">
+    <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="margin-top:10px;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestSex)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TestId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TestName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TestSex)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+
+@if (TempData["Msg"] != null)
+{
+    <script type="text/javascript">
+        var message = @Html.Raw(Json.Encode(TempData["Msg"]));
+        alert(message);
+    </script>
+}
+

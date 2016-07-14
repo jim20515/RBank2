@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Demo.Areas.Admin.Models.SideBarViewModel>
+
+@{
+    Layout = null;
+}
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+            <li><a href="@Url.Content("~/")"><i class="fa fa-undo fa-fw"></i> 返回網站</a></li>
+            @foreach (var item in Model.Select(x => x.SideBarTypeTitle).Distinct())
+            {
+                <li>
+                    <a href="#"><i class="fa fa-cog"></i> @item<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        @foreach (var controller in Model.Where(x => x.SideBarTypeTitle == item).OrderBy(x => x.ControllerPriority))
+                        {
+                            <li>
+                                <a href="@Url.Content("~/Admin/" + controller.ControllerName)"><i class="fa fa-cog"></i> @controller.ControllerTitle</a>
+                            </li>
+                        }
+
+                    </ul>
+
+                </li>
+            }
+        </ul>
+    </div>
+    <!-- /.sidebar-collapse -->
+</div>

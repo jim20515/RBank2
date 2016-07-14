@@ -1,0 +1,41 @@
+﻿本文件解說如何將檔案儲存進入資料庫
+
+再將檔案儲存進資料庫前，必須先建立Table
+你可以使用下面的SQL語法：
+
+	USE[DB_NAME]
+	CREATE TABLE[dbo].[Image.Data] (
+	[Guid] [uniqueidentifier] NOT NULL,
+	[FileName] [nvarchar](100) NOT NULL,
+	[Data] [varbinary](max) NOT NULL
+	 CONSTRAINT[PK_Image.Data] PRIMARY KEY CLUSTERED([Guid] ASC)
+	);
+
+ImageEntity:
+	在Models中有使用CodeFirst定義好的ImageEntity實體
+	可以控制Web.config中的connectionString設定資料庫位置
+
+DBSaveImageService:
+	關於圖片存入資料庫的操作,請用這支service存取資料庫
+	另外操作完成後請使用DBSaveImageService.SaveChanges()修改資料庫資料
+
+關於存入資料庫:
+	DBSaveImageService.AddImageData()提供將圖片存入資料庫的功能
+
+關於更新資料庫:
+	DBSaveImageService.UpdateImageData()提供修改資料的功能
+
+關於刪除資料庫:
+	DBSaveImageService.SetDeleteImageData()可將資料的IsDelete設定為True
+	DBSaveImageService.RemoveImageData()會從資料庫中移除資料
+
+關於從資料庫取出:
+	請直接使用ImageEntity取出圖片資料
+
+目前在專案中的使用:
+	目前可以將圖片存入資料庫中，並且使用Controller取出
+	http://Domain/Image/[pic_Guid]
+
+Html編輯器對應:
+	HtmlEditorService可以將Html編輯器中的圖片抓取出來
+	當圖片路徑是虛擬路徑時會轉存進入資料庫中

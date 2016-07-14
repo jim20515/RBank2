@@ -1,0 +1,40 @@
+﻿本文件將說明在Entity Framework中如何使用Ninject來做IoC & DI
+
+本文件內容有：
+	1.為何使用IoC & DI處理HttpRequest
+	2.安裝Ninject套件並設定
+	3.實際的使用
+
+這邊不多解釋IoC & DI，有興趣請參考下面的連結：
+http://blog.developer.idv.tw/2014/05/ioc-di.html
+https://dotblogs.com.tw/hatelove/archive/2009/10/02/10894.aspx
+
+==============================================================
+
+1.為何使用IoC & DI處理HttpRequest：
+	請參考下面文章
+	http://www.davepaquette.com/archive/2013/03/27/managing-entity-framework-dbcontext-lifetime-in-asp-net-mvc.aspx
+
+2.安裝Ninject套件並設定
+	請使用Nuget安裝Ninject.MVC5
+	安裝完畢之後修改App_Start/NinjectWebCommon.cs
+
+	在CreateKernel()中加入kernel.Bind<DBContext物件>().ToSelf().InRequestScope();
+
+3.實際的使用
+	在Controller中，將Controller修改成
+
+	    public class ControllerName : Controller
+		{
+			private DBContext物件 db;
+			public ControllerName(DBContext context)
+			{
+				db = context;
+			}
+		}
+
+
+
+
+
+	

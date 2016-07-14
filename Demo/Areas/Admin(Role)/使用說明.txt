@@ -1,0 +1,9 @@
+1. 將本來的Admin資料夾移除專案，且更名為其他名稱
+2. 將Admin(Roles)加入專案，且更名為Admin
+3. 建立真正的專案資料庫
+4. 於專案資料庫執行BuildTable內的SQL檔案，建置資料表，執行順序如"建置順序.txt"
+5. 建立 EF Model，引入所有【資料表】與【預存程序與函式】
+6. 修改Web.config 中 connectionStrings 內 DefaultConnection、Entities的目標資料庫，須與 EF 資料庫一致
+7. 修改 GlobalFuns 靜態類別中的 DemoRolesModel.Store，改為真正專案資料庫的EF Model Name (可點擊edmx，於模型瀏覽器中找到這個名稱)   
+8. 將 Utils 內的 DynamicAuthorize 加入專案
+9. 修改程式內容名稱為 DemoRolesEntities 的EF DB連結名稱，改為真正的EF DB連結名稱

@@ -1,0 +1,68 @@
+﻿@model Demo.Models.AspNetRoles
+
+@{
+    ViewBag.Title = "AspNetRoles Delete";
+}
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-warning" role="alert">@TempData["message"]</div>
+}
+
+<style>
+th {
+    text-align: right;
+	width: 20%;
+}
+th, td {
+    padding: 10px 15px !important;
+}
+</style>
+
+<div>
+    @*<h4>是否確認刪除此筆資料?</h4>*@
+    @using (Html.BeginForm()) 
+    {
+        @Html.AntiForgeryToken()
+
+		<div class="row heading">
+
+            <div class="col-md-6 vcenter">
+                <h2>刪除角色</h2>
+            </div>
+
+            <div class="col-md-6 vcenter text-right">
+                <input id="delete_btn" type="submit" value="刪除" class="btn btn-danger" onclick="return confirm('是否確認刪除此筆資料?');" />
+                @Html.ActionLink("返回列表", "Index", null, new { @class = "btn btn-default" })
+            </div>
+
+        </div>
+
+    }
+
+    <hr />
+
+    <table class="table table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Name)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Account_ControllerName)
+            </th>
+            <td>
+                @{
+                    var names = string.Join(", ", Model.Account_ControllerName.Select(x => x.Title));
+                    @Html.DisplayFor(model => names)
+                }
+            </td>
+        </tr>
+
+    </table>
+
+</div>

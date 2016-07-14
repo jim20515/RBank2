@@ -1,0 +1,138 @@
+﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="Imports.include.t4" #>
+@model IEnumerable<#= "<" + ViewDataTypeName + ">" #>
+<#
+// The following chained if-statement outputs the file header code and markup for a partial view, a view using a layout page, or a regular view.
+if(IsPartialView) {
+#>
+
+<#
+} else if(IsLayoutPageSelected) {
+#>
+
+@{
+    ViewBag.Title = "<#= ViewDataTypeShortName #> - 排序";
+<#
+if (!String.IsNullOrEmpty(LayoutPageFile)) {
+#>
+    Layout = "<#= LayoutPageFile#>";
+<#
+}
+#>
+}
+
+<h2><#= ViewDataTypeShortName #> - 排序</h2>
+
+<hr />
+
+<#
+} else {
+#>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title><#= ViewDataTypeShortName #> - 排序</title>
+</head>
+<body>
+<#
+    PushIndent("    ");
+}
+#>
+
+@section scripts {
+    <script>
+        var $sortList = Sortable.create(sortList, {
+            animation: 150,
+            onEnd: function (evt) {
+                // dragging ended
+                if (evt.oldIndex !== evt.newIndex) {
+                    $(evt.item).addClass('changed');
+                }
+            }
+        });
+
+        $('#save-sort').on('click', function (e) {
+            e.preventDefault()
+            var data = $sortList.toArray();
+            //console.log(data);
+            $.post(this.href, { sortList: data }, function (rs) {
+                //console.log(rs);
+                if (rs.success) {
+                    location.reload();
+                }
+            });
+        });
+
+    </script>
+}
+
+<div class="alert alert-warning">
+    <p>請拖曳調整順序</p>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading clearfix">
+        <h3 class="panel-title"></h3>
+        <div class="pull-left">
+            <a href="@Url.Action("UpdateSort")" id="save-sort" class="btn btn-sm btn-ghost btn-outline"><i class="fa fa-floppy-o" aria-hidden="true"></i> 儲存</a>
+            <a href="@Url.Action("Sort")" class="btn btn-sm btn-ghost btn-outline"><i class="fa fa-refresh" aria-hidden="true"></i> 重新整理</a>
+        </div>
+    </div>
+
+<div class="panel-body">
+
+	<div id="sortList" class="list-group block__list block__list_words">
+
+@foreach (var item in Model) {
+<# 
+	string pkName = GetPrimaryKeyName(); 
+#>
+	<div class="list-group-item" data-id="@item.<#= pkName == null ? "PrimaryKey" : pkName #>">
+		<i class="ion-drag"></i>
+<#
+IEnumerable<PropertyMetadata> properties = ModelMetadata.Properties;
+foreach (PropertyMetadata property in properties) {
+    if (property.Scaffold && !property.IsForeignKey) {
+#>
+<#
+        // We do not want to show any association properties for which there is
+        // no associated foreign key.
+        if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+            continue;
+        }
+#>
+		@Html.DisplayFor(modelItem => <#= "item." + GetValueExpression(property) #>) | 
+<#
+    }
+}
+#>
+		<a href="@Url.Action("Details" , new { id = item.<#= pkName == null ? "PrimaryKey" : pkName #> })" class="sort-detail" target="_blank">
+			<i class="ion-android-open"></i>
+		</a>
+    </div>
+}
+
+	</div>
+</div>
+</div>
+<#
+// The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
+#>
+<#
+if(!IsPartialView && !IsLayoutPageSelected) {
+    ClearIndent();
+#>
+</body>
+</html>
+<#
+}
+#>
+<#@ include file="ModelMetadataFunctions.cs.include.t4" #>

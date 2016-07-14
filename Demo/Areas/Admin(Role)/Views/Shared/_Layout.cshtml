@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>@ViewBag.Title - WhatsMedia</title>
+    @Styles.Render("~/Content/Admin")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
+
+    <!-- Custom CSS -->
+    <link href="~/Content/bootstrap-colorpicker/css/bootstrap-colorpicker.css" rel="stylesheet">
+    <link href="~/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <!--[endif]-->
+
+    <script src="~/Scripts/tinymce/tinymce.js"></script>
+    <script>
+        function RoxyFileBrowser(field_name, url, type, win) {
+            var roxyFileman = '/fileman/index.html';
+            if (roxyFileman.indexOf("?") < 0) {
+                roxyFileman += "?type=" + type;
+            }
+            else {
+                roxyFileman += "&type=" + type;
+            }
+            roxyFileman += '&input=' + field_name + '&value=' + win.document.getElementById(field_name).value;
+            if (tinyMCE.activeEditor.settings.language) {
+                roxyFileman += '&langCode=' + tinyMCE.activeEditor.settings.language;
+            }
+            tinyMCE.activeEditor.windowManager.open({
+                file: roxyFileman,
+                title: '檔案總管',
+                width: 960,
+                height: 650,
+                resizable: "yes",
+                plugins: "media",
+                inline: "yes",
+                close_previous: "no"
+            }, { window: win, input: field_name });
+            return false;
+        }
+    </script>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="~/Admin">WhatsMedia</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            @{ Html.RenderPartial("~/Areas/Admin/Views/Shared/_TopBar.cshtml"); }
+            <!-- /.navbar-top-links -->
+
+            @*@{ Html.RenderPartial("~/Areas/Admin/Views/Shared/_Sidebar.cshtml"); }*@
+            @{ Html.RenderAction("SideBarItems", "Home"); }
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            @RenderBody()
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    @Scripts.Render("~/bundles/Admin")
+
+    <!-- Custom Theme JavaScript -->
+    <script src="~/js/sb-admin-2.js"></script>
+
+    @RenderSection("scripts", required: false)
+    
+    <script src="~/js/custom-admin.js"></script>
+    <script src="~/js/label-setting.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+﻿為了提高安全性，使用表單的頁面，建議加入防機器人機制
+此範例為 Google reCAPTCHA
+==================================================================
+【前置動作】
+==================================================================
+新增一組 Google reCAPTCHA，取得兩組key
+https://www.google.com/recaptcha/intro/index.html
+
+NuGet 安裝 RecaptchaNet
+
+==================================================================
+1. 修改 Web.config 設定
+==================================================================
+    <add key="recaptchaPublicKey" value="" />
+    <add key="recaptchaPrivateKey" value="" />
+
+==================================================================
+2. 將驗證code加入對應POST的Action()
+==================================================================
+using Recaptcha.Web;
+using Recaptcha.Web.Mvc;
+
+	// Action 必須使用 async Task<ActionResult>
+	public async Task<ActionResult> xxxx()
+
+
+    #region Google reCAPTCHA 驗證
+    RecaptchaVerificationHelper recaptchaHelper = this.GetRecaptchaVerificationHelper();
+    if (String.IsNullOrEmpty(recaptchaHelper.Response))
+    {
+        ModelState.AddModelError("", "驗證碼答案不能為空。");
+        return View(mainActivity_SignUp);
+    }
+    RecaptchaVerificationResult recaptchaResult = await recaptchaHelper.VerifyRecaptchaResponseTaskAsync();
+    if (recaptchaResult != RecaptchaVerificationResult.Success)
+    {
+        ModelState.AddModelError("", "驗證碼不正確的答案。");
+    }
+    #endregion
+
+==================================================================
+3. View加入此helper
+   如有需要可以傳入參數如語系...
+   Google文件: https://developers.google.com/recaptcha/intro
+   插件文件: https://github.com/tanveery/recaptcha-net/blob/master/README.md
+==================================================================
+	3-1. 引入資源 (表單預設為id="forms")
+		 @using Recaptcha.Web.Mvc
+		 <script src="~/js/g-recaptcha-required.js"></script>
+
+	3-3. 顯示位置 和 錯誤訊息
+		 @Html.Recaptcha()
+		 <span id="recaptcha-required" class="text-danger" style="display: none;">驗證碼答案不能為空。</span>
